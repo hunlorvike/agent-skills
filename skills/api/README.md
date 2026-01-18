@@ -10,6 +10,8 @@ This category contains skills related to ASP.NET Web API design, routing, and AP
 | [minimal-api-patterns](./minimal-api-patterns/) | Endpoint routing, validation for Minimal APIs | High |
 | [api-versioning](./api-versioning/) | Header/route versioning strategies | High |
 | [openapi-swagger](./openapi-swagger/) | OpenAPI spec, Swagger documentation | Medium |
+| [error-handling-patterns](./error-handling-patterns/) | Global exception handling, ProblemDetails | Critical |
+| [api-rate-limiting](./api-rate-limiting/) | Rate limiting strategies, quotas, throttling | Medium |
 
 ## When to Use
 
@@ -17,3 +19,4 @@ This category contains skills related to ASP.NET Web API design, routing, and AP
 - Reviewing existing API controllers
 - Migrating from MVC to Minimal APIs
 - Designing API contracts
+- Implementing error handling

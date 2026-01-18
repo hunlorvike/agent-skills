@@ -14,13 +14,17 @@ Agent Skills are modular capability packs that help AI agents understand and app
 
 | Category | Description | Skills Count |
 |----------|-------------|--------------|
-| [API](./skills/api/) | Web API design, routing, versioning | 4 |
+| [API](./skills/api/) | Web API design, routing, versioning | 5 |
 | [Auth](./skills/auth/) | Authentication & authorization | 3 |
 | [Data](./skills/data/) | Data access & persistence | 3 |
 | [Observability](./skills/observability/) | Logging, tracing, health checks | 3 |
 | [Testing](./skills/testing/) | Unit & integration testing | 3 |
 | [DevOps](./skills/devops/) | CI/CD, containerization | 3 |
 | [Security](./skills/security/) | OWASP, headers, validation | 3 |
+| [Performance](./skills/performance/) | Caching, optimization | 1 |
+| [Patterns](./skills/patterns/) | Design patterns, architecture | 4 |
+| [Configuration](./skills/configuration/) | Configuration management | 1 |
+| [Messaging](./skills/messaging/) | Message queues, event-driven | 1 |
 
 ## Quick Start
 
@@ -69,6 +73,8 @@ skill-runner check webapi-best-practices --path ./src/MyApi
 - `minimal-api-patterns` - Endpoint routing, validation for Minimal APIs
 - `api-versioning` - Header/route versioning strategies
 - `openapi-swagger` - OpenAPI spec, Swagger documentation
+- `error-handling-patterns` - Global exception handling, ProblemDetails
+- `api-rate-limiting` - Rate limiting strategies, quotas, throttling
 
 ### Authentication & Authorization
 - `jwt-authentication` - JWT Bearer token configuration
@@ -99,6 +105,21 @@ skill-runner check webapi-best-practices --path ./src/MyApi
 - `owasp-api-security` - OWASP Top 10 API risks
 - `secure-headers` - CORS, CSP, HSTS configuration
 - `input-validation` - FluentValidation, model validation
+
+### Performance & Optimization
+- `caching-strategies` - In-memory, distributed caching, response caching
+
+### Design Patterns & Architecture
+- `background-jobs-tasks` - Hosted services, Hangfire, Quartz.NET
+- `dependency-injection-patterns` - Service lifetimes, factory patterns, Options
+- `middleware-patterns` - Custom middleware, pipeline ordering
+- `cqrs-mediatr` - CQRS pattern, MediatR, command/query handlers
+
+### Configuration Management
+- `configuration-management` - IConfiguration, Options pattern, secrets
+
+### Messaging & Event-Driven
+- `message-queues-event-driven` - Message queues, event-driven architecture, MassTransit
 
 ## Contributing
 
