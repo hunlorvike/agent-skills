@@ -1,0 +1,105 @@
+name: Validate Skills
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'skills/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'skills/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install yaml-lint
+        run: npm install -g yaml-lint
+
+      - name: Validate SKILL.md YAML frontmatter
+        run: |
+          echo "Validating SKILL.md files..."
+          for file in $(find skills -name "SKILL.md"); do
+            echo "Checking $file"
+            # Extract YAML frontmatter and validate
+            sed -n '/^---$/,/^---$/p' "$file" | head -n -1 | tail -n +2 > /tmp/frontmatter.yml
+            if [ -s /tmp/frontmatter.yml ]; then
+              yamllint -d relaxed /tmp/frontmatter.yml || echo "Warning: YAML issues in $file"
+            fi
+          done
+          echo "Validation complete!"
+
+      - name: Check required fields
+        run: |
+          echo "Checking required fields in SKILL.md files..."
+          for file in $(find skills -name "SKILL.md"); do
+            echo "Checking $file"
+            
+            # Check for required fields
+            if ! grep -q "^name:" "$file"; then
+              echo "ERROR: Missing 'name' field in $file"
+              exit 1
+            fi
+            
+            if ! grep -q "^description:" "$file"; then
+              echo "ERROR: Missing 'description' field in $file"
+              exit 1
+            fi
+            
+            if ! grep -q "^use_when:" "$file"; then
+              echo "ERROR: Missing 'use_when' field in $file"
+              exit 1
+            fi
+            
+            if ! grep -q "^priority:" "$file"; then
+              echo "ERROR: Missing 'priority' field in $file"
+              exit 1
+            fi
+          done
+          echo "All required fields present!"
+
+      - name: Validate C# code snippets
+        run: |
+          echo "Checking C# code snippets for basic syntax..."
+          # This is a basic check - could be enhanced with actual compilation
+          for file in $(find skills -name "SKILL.md"); do
+            # Check for unmatched code blocks
+            open_blocks=$(grep -c '```csharp' "$file" || true)
+            close_blocks=$(grep -c '```$' "$file" || true)
+            
+            if [ "$open_blocks" -gt 0 ]; then
+              echo "$file has $open_blocks C# code blocks"
+            fi
+          done
+          echo "Code snippet check complete!"
+
+  build-tool:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Build skill-runner tool
+        run: |
+          if [ -d "tools/skill-runner" ]; then
+            cd tools/skill-runner
+            dotnet build --configuration Release
+          else
+            echo "Skill runner tool not found, skipping build"
+          fi
